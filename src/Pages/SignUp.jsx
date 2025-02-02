@@ -1,129 +1,93 @@
 import React, { useState } from "react";
+import SliderComponent from "../Components/SliderComponent";
 
-const cities = [
-  {
-    name: "Chennai",
-    mapSrc: "https://www.openstreetmap.org/export/embed.html?bbox=80.2295%2C12.9211%2C80.2727%2C13.0869&layer=mapnik",
-    question: "What is your name?",
-  },
-  {
-    name: "Bhubaneswar",
-    mapSrc: "https://www.openstreetmap.org/export/embed.html?bbox=85.785%2C20.220%2C86.045%2C20.420&layer=mapnik",
-    question: "What is your email address?",
-  },
-  {
-    name: "Mumbai",
-    mapSrc: "https://www.openstreetmap.org/export/embed.html?bbox=72.775%2C18.887%2C72.965%2C19.111&layer=mapnik",
-    question: "What is your business name?",
-  },
-  {
-    name: "Delhi",
-    mapSrc: "https://www.openstreetmap.org/export/embed.html?bbox=77.086%2C28.485%2C77.211%2C28.785&layer=mapnik",
-    question: "What service are you looking for?",
-  },
-  {
-    name: "Kolkata",
-    mapSrc: "https://www.openstreetmap.org/export/embed.html?bbox=88.295%2C22.445%2C88.495%2C22.665&layer=mapnik",
-    question: "What is your budget range?",
-  },
-  {
-    name: "Bangalore",
-    mapSrc: "https://www.openstreetmap.org/export/embed.html?bbox=77.505%2C12.920%2C77.635%2C13.060&layer=mapnik",
-    question: "What is your preferred timeline?",
-  },
+const questions = [
+  { question: "What is the name of your business?", placeholder: "Enter your business name" },
+  { question: "What is your digital marketing budget?", placeholder: "Enter your budget" },
+  { question: "What are your marketing goals?", placeholder: "Enter your goals" },
+  { question: "What industries do you want to target?", placeholder: "Enter target industries" },
+  { question: "How do you measure success?", placeholder: "Enter success metrics" },
+  { question: "What is your timeline for this campaign?", placeholder: "Enter timeline" },
 ];
 
-function SignUp() {
-  const [currentStep, setCurrentStep] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+const ContactUs = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [rotate, setRotate] = useState(45); // 🔥 Start at 45 degrees
+  const [showPopup, setShowPopup] = useState(false); // Track the popup visibility
+  const [redirecting, setRedirecting] = useState(false); // Track the redirecting status
+  const rotateAdd = 360 / questions.length; // Adjust rotation increment based on number of questions
 
-  const handleNext = () => {
-    if (currentStep < cities.length - 1) {
-      setIsTransitioning(true);
-      setTimeout(() => {
-        setCurrentStep((prev) => prev + 1);
-        setIsTransitioning(false);
-      }, 500);
-    } else {
-      setIsSubmitted(true);
-      setTimeout(() => {
-        setCurrentStep(cities.length); // Show India after final submit
-      }, 500);
-    }
+  const nextSlide = () => {
+    setActiveIndex((prev) => (prev + 1) % questions.length);  // Change question
+    setRotate((prev) => prev + rotateAdd); // Rotate slider
+  };
+
+  const handleSubmit = () => {
+    setShowPopup(true); // Show popup
+    setTimeout(() => {
+      setRedirecting(true); // Start redirecting
+      window.location.reload(); // Refresh the page (or you can navigate elsewhere)
+    }, 5000); // Redirect after 5 seconds
   };
 
   return (
-    <section className="text-gray-600 body-font relative">
-      {/* Map Section */}
-      <div className="absolute inset-0">
-        <div
-          className={`transition-opacity duration-500 ${isTransitioning ? "opacity-0" : "opacity-100"}`}
-          style={{
-            height: "100vh",
-            width: "100%",
-            position: "absolute",
-            top: 0,
-            left: 0,
-          }}
-        >
-          <iframe
-            width="100%"
-            height="100%"
-            frameBorder="0"
-            marginHeight="0"
-            marginWidth="0"
-            title="map"
-            scrolling="no"
-            src={isSubmitted ? "https://www.openstreetmap.org/export/embed.html?bbox=68.0%2C6.5%2C97.5%2C37.5&layer=mapnik" : cities[currentStep]?.mapSrc}
-            style={{
-              filter: "grayscale(1) contrast(1.2) opacity(0.85)",
-              transition: "opacity 1s ease-in-out",
-            }}
-          ></iframe>
+    <div className="bg-gradient-to-r from-orange-500 to-gray-900 h-screen text-white flex flex-col">
+      {/* Main Content */}
+      <div className="flex flex-1 mt-16">
+        {/* Left Section for Title */}
+        <div className="w-1/2 flex items-center justify-center">
+          <h1 className="text-7xl text-white drop-shadow-lg font-[Pacifico] text-right">
+            CONTACT US
+          </h1>
+        </div>
+
+        {/* Right Section for Questions */}
+        <div className="w-1/2 p-12 flex flex-col items-center justify-center bg-[#0D0E12] rounded-tl-3xl">
+          <div className="max-w-sm text-center">
+            <h1 className="text-4xl text-orange-400 mb-6 font-bold">
+              {questions[activeIndex].question}
+            </h1>
+            <input
+              type="text"
+              placeholder={questions[activeIndex].placeholder}
+              className="w-full p-3 mb-6 text-black rounded-full"
+            />
+            {activeIndex === questions.length - 1 ? (
+              <button
+                onClick={handleSubmit}
+                className="px-5 py-3 bg-green-500 rounded-full text-white hover:bg-green-600 transition duration-300"
+              >
+                Submit
+              </button>
+            ) : (
+              <button
+                onClick={nextSlide}
+                className="px-5 py-3 bg-orange-500 rounded-full text-white hover:bg-orange-600 transition duration-300"
+              >
+                Next
+              </button>
+            )}
+          </div>
         </div>
       </div>
 
-      {/* Form Section */}
-      <div className="container px-5 py-24 mx-auto flex relative z-10">
-        <div
-          className="lg:w-1/3 md:w-1/2 bg-gradient-to-r from-indigo-500 via-purple-600 to-pink-500 rounded-lg p-10 flex flex-col md:ml-auto w-full mt-10 md:mt-0 shadow-xl"
-          style={{ transition: "transform 0.5s ease-in-out" }}
-        >
-          <h2 className="text-white text-2xl mb-3 font-medium title-font">
-            {isSubmitted ? "Thank You!" : "Contact Us"}
-          </h2>
-          <p className="leading-relaxed mb-5 text-gray-100 text-lg">
-            {isSubmitted
-              ? "Thank you for filling out the form! We will get in touch with you soon."
-              : cities[currentStep]?.question}
-          </p>
-          {!isSubmitted && (
-            <div className="relative mb-6">
-              <label htmlFor="answer" className="leading-7 text-sm text-gray-200">
-                Your Answer
-              </label>
-              <input
-                type="text"
-                id="answer"
-                name="answer"
-                className="w-full bg-white bg-opacity-75 rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-2 px-4 leading-8 transition-colors duration-200 ease-in-out"
-              />
-            </div>
-          )}
-          <button
-            onClick={handleNext}
-            className="text-white bg-indigo-500 border-0 py-3 px-8 focus:outline-none hover:bg-indigo-600 rounded text-xl transition-all duration-300 ease-in-out transform hover:scale-110"
-          >
-            {isSubmitted ? "Go Back" : currentStep < cities.length - 1 ? "Next" : "Submit"}
-          </button>
+      {/* Slider Component Below (Half Visible) */}
+      <div className="relative">
+        <div className="absolute -bottom-48 left-1/2 transform -translate-x-1/2">
+          <SliderComponent activeIndex={activeIndex} setActiveIndex={setActiveIndex} rotate={rotate} />
         </div>
       </div>
 
-      <div style={{ height: "100vh", backgroundColor: "transparent" }}></div>
-
-    </section>
+      {/* Popup Message */}
+      {showPopup && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black/50">
+          <div className="bg-white p-8 rounded-lg shadow-lg text-center">
+            <h2 className="text-xl font-bold text-black">We will contact you shortly on your submitted contact details.</h2>
+          </div>
+        </div>
+      )}
+    </div>
   );
-}
+};
 
-export default SignUp;
+export default ContactUs;
