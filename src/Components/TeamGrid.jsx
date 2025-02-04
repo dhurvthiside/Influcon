@@ -1,21 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 
-const TeamGrid = () => {
-  const [scrollY, setScrollY] = useState(0);
+const TeamSection = () => {
+  return (
+    <motion.div
+      className="relative w-full text-center py-20 bg-[#c3e7ff] overflow-hidden"
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 1 }}
+    >
+      <h2 className="text-6xl font-bold text-[#0d2489]" style={{ fontFamily: "Brick Sans, sans-serif" }}>
+        OUR TEAM
+      </h2>
+    </motion.div>
+  );
+};
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  const scrollSpeeds = [-0.2, 0.2, -0.15, 0.15]; // Different speeds for each column
+const ParallaxTeam = () => {
+  const { scrollY } = useScroll();
+  const translateY1 = useTransform(scrollY, [0, 500], [0, -50]);
+  const translateY2 = useTransform(scrollY, [0, 500], [0, 50]);
 
   const teamMembers = [
     { name: 'Dedy', role: 'Web Developer', image: 'https://a-us.storyblok.com/f/1017006/912x1120/8e93856f41/dedy.jpg/m/456x560/filters:quality(80)' },
@@ -36,53 +40,54 @@ const TeamGrid = () => {
     { name: 'Niaal', role: 'Agency Director', image: 'https://a-us.storyblok.com/f/1017006/912x1120/fb0ce76564/niaal.jpg/m/456x560/filters:quality(80)' },
   ];
 
-  const columns = [[], [], [], []];
-  teamMembers.forEach((member, index) => {
-    columns[index % 4].push(member);
-  });
-
   return (
-    <div className="min-h-screen bg-gray-100 overflow-hidden pt-20">
-      <h2 className="text-center text-5xl font-extrabold mb-12">
-        <span className="bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 text-transparent bg-clip-text">
-          OUR TEAM
-        </span>
-      </h2>
-      <div className="grid grid-cols-4 gap-8 px-12">
-        {columns.map((column, index) => (
-          <div
+    <div className="relative min-h-screen bg-gray-100 flex justify-center items-center px-6 md:px-12 overflow-hidden">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 w-full">
+        {teamMembers.map((member, index) => (
+          <motion.div
             key={index}
-            className="space-y-8"
-            style={{
-              transform: `translateY(${scrollY * scrollSpeeds[index]}px)`, // Parallax effect applied here
-              transition: "transform 0.1s ease-out",
-            }}
+            className="relative h-[550px] w-full bg-white rounded-lg shadow-lg overflow-hidden group"
+            style={{ transform: `translateY(${index % 2 === 0 ? translateY1 : translateY2}px)` }}
+            transition={{ ease: "easeOut", duration: 0.5 }}
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
           >
-            {column.map((member, idx) => (
-              <div
-                key={idx}
-                className="relative h-[700px] bg-white rounded-lg overflow-hidden shadow-lg group hover:shadow-2xl transition-shadow duration-300"
-              >
-                <img
-                  src={member.image}
-                  alt={member.name}
-                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-70"></div>
-                <div className="absolute bottom-6 left-6 z-10">
-                  <h3 className="text-2xl font-bold text-white">{member.name}</h3>
-                  <p className="text-lg text-gray-300">{member.role}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+            {/* Image with hover effect */}
+            <motion.img
+              src={member.image}
+              alt={member.name}
+              className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+
+            {/* Dark Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80 transition-opacity duration-500 group-hover:opacity-90"></div>
+
+            {/* Text with animation */}
+            <motion.div
+              className="absolute bottom-6 left-6 backdrop-blur-md p-4 rounded-lg bg-white/20 border border-white/40 transition-transform duration-500 group-hover:translate-y-[-10px]"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              <h3 className="text-2xl font-bold text-white">{member.name}</h3>
+              <p className="text-lg text-gray-300">{member.role}</p>
+            </motion.div>
+          </motion.div>
         ))}
       </div>
-
-      {/* Extra space for overflow */}
-      <div className="h-[600px]"></div> {/* Adjust this height as needed */}
     </div>
   );
 };
 
-export default TeamGrid;
+const TeamPage = () => {
+  return (
+    <div>
+      <TeamSection />
+      <ParallaxTeam />
+    </div>
+  );
+};
+
+export default TeamPage;

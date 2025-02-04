@@ -1,79 +1,59 @@
 import React from "react";
 
 const Roadmap = () => {
+  const steps = [
+    {
+      title: "Phase 1",
+      date: "Q1 2024",
+      description: "Project Initiation and Research. Understanding market needs.",
+    },
+    {
+      title: "Phase 2",
+      date: "Q2 2024",
+      description: "Building MVP with essential features and usability testing.",
+    },
+    {
+      title: "Phase 3",
+      date: "Q3 2024",
+      description: "Expanding feature set and integrating AI capabilities.",
+    },
+    {
+      title: "Phase 4",
+      date: "Q4 2024",
+      description: "Beta launch and gathering feedback for final improvements.",
+    },
+  ];
+
   return (
-    <div className="min-h-screen bg-gray-50 pt-20">
-      <h2 className="text-center text-6xl font-extrabold mb-16 text-transparent bg-clip-text bg-gradient-to-r from-purple-500 via-indigo-500 to-blue-500">
+    <div className="py-16 bg-[#c3e7ff] font-[Poppins]">
+      <h2 className="text-center text-5xl font-extrabold text-[#0d2489] mb-12">
         ROADMAP
       </h2>
-      <ol className="flex justify-center space-x-10">
-        <li className="relative mb-6 w-1/4">
-          <div className="flex items-center justify-center">
-            <div className="z-10 flex items-center justify-center w-8 h-8 bg-gradient-to-r from-blue-500 to-teal-400 rounded-full shadow-lg">
-              <svg
-                className="w-3 h-3 text-white"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
-              </svg>
+      <div className="flex items-center justify-center w-full overflow-x-auto px-8">
+        <div className="relative flex w-full max-w-5xl">
+          {steps.map((step, index) => (
+            <div
+              key={index}
+              className="relative flex flex-col items-center w-1/4 px-4 text-center group"
+            >
+              {/* Step Indicator */}
+              <div className="w-14 h-14 flex items-center justify-center bg-[#0d2489] text-white font-bold text-lg rounded-full shadow-lg transition-transform group-hover:scale-110">
+                {index + 1}
+              </div>
+              {/* Connecting Line */}
+              {index !== steps.length - 1 && (
+                <div className="absolute top-1/2 left-full w-full h-1 bg-gradient-to-r from-[#0d2489] to-transparent transform -translate-y-1/2"></div>
+              )}
+              {/* Text Content */}
+              <div className="mt-6 p-4 bg-white rounded-lg shadow-md w-48 transition-transform transform hover:scale-105">
+                <h3 className="text-lg font-semibold text-[#0d2489]">{step.title}</h3>
+                <p className="text-sm text-gray-600 font-medium">{step.date}</p>
+                <p className="text-xs text-gray-500 mt-2">{step.description}</p>
+              </div>
             </div>
-            <div className="flex-1 h-0.5 bg-gradient-to-r from-gray-300 to-transparent"></div>
-          </div>
-          <div className="mt-5 text-center">
-            <h3 className="text-lg font-semibold text-gray-800">Flowbite Library v1.0.0</h3>
-            <time className="block text-sm text-gray-500">Released on December 2, 2021</time>
-            <p className="mt-2 text-sm text-gray-600">
-              Get started with dozens of web components and interactive elements.
-            </p>
-          </div>
-        </li>
-        <li className="relative mb-6 w-1/4">
-          <div className="flex items-center justify-center">
-            <div className="z-10 flex items-center justify-center w-8 h-8 bg-gradient-to-r from-blue-500 to-teal-400 rounded-full shadow-lg">
-              <svg
-                className="w-3 h-3 text-white"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
-              </svg>
-            </div>
-            <div className="flex-1 h-0.5 bg-gradient-to-r from-gray-300 to-transparent"></div>
-          </div>
-          <div className="mt-5 text-center">
-            <h3 className="text-lg font-semibold text-gray-800">Flowbite Library v1.2.0</h3>
-            <time className="block text-sm text-gray-500">Released on December 23, 2021</time>
-            <p className="mt-2 text-sm text-gray-600">
-              Get started with dozens of web components and interactive elements.
-            </p>
-          </div>
-        </li>
-        <li className="relative mb-6 w-1/4">
-          <div className="flex items-center justify-center">
-            <div className="z-10 flex items-center justify-center w-8 h-8 bg-gradient-to-r from-blue-500 to-teal-400 rounded-full shadow-lg">
-              <svg
-                className="w-3 h-3 text-white"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
-              </svg>
-            </div>
-            <div className="flex-1 h-0.5 bg-gradient-to-r from-gray-300 to-transparent"></div>
-          </div>
-          <div className="mt-5 text-center">
-            <h3 className="text-lg font-semibold text-gray-800">Flowbite Library v1.3.0</h3>
-            <time className="block text-sm text-gray-500">Released on January 5, 2022</time>
-            <p className="mt-2 text-sm text-gray-600">
-              Get started with dozens of web components and interactive elements.
-            </p>
-          </div>
-        </li>
-      </ol>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
