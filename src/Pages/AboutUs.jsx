@@ -3,7 +3,7 @@ import TeamGrid from "../Components/TeamGrid";
 import Roadmap from "../Components/Roadmap";
 import Founders from "../Components/Founders";
 import Mentors from "../Components/Mentors";
-
+import TeamImageAboutUs from "../Components/TeamImageAboutUs";
 
 const AboutUs = () => {
   return (

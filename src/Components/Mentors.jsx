@@ -21,7 +21,7 @@ const Mentors = () => {
     <section className="text-gray-600 body-font py-24 bg-gray-50">
       <div className="container px-5 mx-auto">
         {/* Title Section */}
-        <h1 className="text-center text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#0d2489] via-[#c3e7ff] to-[#000000] mb-12 font-[Brick Sans]">
+        <h1 className=" text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#0d2489] via-[#c3e7ff] to-[#000000] mb-12 font-[Brick Sans]">
           MEET OUR MENTORS
         </h1>
 
