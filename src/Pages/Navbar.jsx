@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import logo from "../Components/Assets/logo.png";
 
 const Navbar = () => {
-  const [isHovered, setIsHovered] = useState(false);
   const [open, setOpen] = useState(false);
 
   return (
@@ -12,15 +11,9 @@ const Navbar = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
-      className="fixed top-5 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-7xl"
+      className="fixed top-0 left-0 w-full z-50 bg-black"
     >
-      <nav
-        className={`flex items-center justify-between px-6 py-4 rounded-full shadow-lg ${
-          isHovered || open ? "bg-black" : "bg-transparent"
-        } transition-colors duration-500`}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
+      <nav className="flex items-center justify-between px-6 py-4 shadow-lg">
         {/* Logo */}
         <Link to="/" className="flex items-center">
           <img src={logo} alt="Logo" className="h-8 w-8 mr-3" />

@@ -9,11 +9,13 @@ import ContactUs from "./Pages/ContactUs";
 import Footer from "./Pages/Footer";
 import Login from "./Pages/Login";
 import SignUp from "./Pages/SignUp";
+import ScrollToTop from "./Components/ScrollToTop";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 const App = () => {
   return (
     <Router>
+      <ScrollToTop />
       <Navbar />
       <Routes>
         <Route path="/about-us" element={<AboutUs />} />
