@@ -1,26 +1,22 @@
 import React from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 
 const TeamSection = () => {
   return (
     <motion.div
-      className="relative w-full text-center py-20 bg-[#c3e7ff] overflow-hidden"
-      initial={{ opacity: 0, y: 50 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 1 }}
-    >
-      <h2 className="text-6xl font-bold text-[#0d2489]" style={{ fontFamily: "Brick Sans, sans-serif" }}>
-        OUR TEAM
-      </h2>
-    </motion.div>
+    className="relative w-full text-center py-10 bg-[#c3e7ff] overflow-hidden z-10"
+    initial={{ opacity: 0, y: 50 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 1 }}
+  >
+    <h2 className="text-5xl font-bold text-[#0d2489]" style={{ fontFamily: "Brick Sans, sans-serif" }}>
+      OUR TEAM
+    </h2>
+  </motion.div>
   );
 };
 
 const ParallaxTeam = () => {
-  const { scrollY } = useScroll();
-  const translateY1 = useTransform(scrollY, [0, 500], [0, -50]);
-  const translateY2 = useTransform(scrollY, [0, 500], [0, 50]);
-
   const teamMembers = [
     { name: 'Dedy', role: 'Web Developer', image: 'https://a-us.storyblok.com/f/1017006/912x1120/8e93856f41/dedy.jpg/m/456x560/filters:quality(80)' },
     { name: 'Jasmine', role: 'UX Designer', image: 'https://a-us.storyblok.com/f/1017006/912x1120/c9f043a605/jasmine.jpg/m/456x560/filters:quality(80)' },
@@ -39,40 +35,36 @@ const ParallaxTeam = () => {
     { name: 'Lia', role: 'Front-end Developer', image: 'https://a-us.storyblok.com/f/1017006/1000x1240/05fba9e65f/lia.jpg/m/456x560/filters:quality(80)' },
     { name: 'Niaal', role: 'Agency Director', image: 'https://a-us.storyblok.com/f/1017006/912x1120/fb0ce76564/niaal.jpg/m/456x560/filters:quality(80)' },
   ];
-
   return (
-    <div className="relative min-h-screen bg-gray-100 flex justify-center items-center px-6 md:px-12 overflow-hidden">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 w-full">
+    <div className="relative min-h-screen bg-gray-100 flex justify-center items-center px-6 md:px-12">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-14 w-full">
         {teamMembers.map((member, index) => (
           <motion.div
             key={index}
-            className="relative h-[550px] w-full bg-white rounded-lg shadow-lg overflow-hidden group"
-            style={{ transform: `translateY(${index % 2 === 0 ? translateY1 : translateY2}px)` }}
-            transition={{ ease: "easeOut", duration: 0.5 }}
+            className="relative flex flex-col items-center group"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
             viewport={{ once: true }}
           >
-            {/* Image with hover effect */}
+            {/* Enlarged Image with Hover Glow */}
             <motion.img
               src={member.image}
               alt={member.name}
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              className="w-56 h-56 rounded-full border-4 border-white shadow-lg transition-transform duration-500 group-hover:scale-110 group-hover:ring-8 group-hover:ring-[#0d2489]"
             />
 
-            {/* Dark Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80 transition-opacity duration-500 group-hover:opacity-90"></div>
-
-            {/* Text with animation */}
+            {/* Larger Name & Role with Hover Animation */}
             <motion.div
-              className="absolute bottom-6 left-6 backdrop-blur-md p-4 rounded-lg bg-white/20 border border-white/40 transition-transform duration-500 group-hover:translate-y-[-10px]"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              viewport={{ once: true }}
+              className="mt-6 text-center transition-all duration-500"
+              whileHover={{ y: -5 }}
             >
-              <h3 className="text-2xl font-bold text-white">{member.name}</h3>
-              <p className="text-lg text-gray-300">{member.role}</p>
+              <h3 className="text-3xl font-bold text-[#0d2489] transition-all duration-300 group-hover:text-white">
+                {member.name}
+              </h3>
+              <p className="text-xl text-gray-600 group-hover:text-[#0d2489] transition-all duration-300">
+                {member.role}
+              </p>
             </motion.div>
           </motion.div>
         ))}
@@ -81,7 +73,7 @@ const ParallaxTeam = () => {
   );
 };
 
-const TeamPage = () => {
+const TeamPage = () => { //you can also do this make two section on a single page and then make a parent section and call both of them and return to where it is called
   return (
     <div>
       <TeamSection />
