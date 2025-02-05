@@ -4,24 +4,26 @@ import { motion } from "framer-motion";
 const mentors = [
   {
     name: "John Doe",
-    image: "https://dummyimage.com/1201x501",
+    role: "AI Researcher",
     description:
-      "John is a seasoned expert with over 20 years of experience in the tech industry, specializing in software development and leadership.",
+      "John is an experienced AI researcher with over 10 years in the field. He has worked on deep learning projects and has mentored hundreds of students in AI and ML.",
+    image: "https://a-us.storyblok.com/f/1017006/912x1120/8e93856f41/dedy.jpg/m/456x560/filters:quality(80)",
   },
   {
     name: "Jane Smith",
-    image: "https://dummyimage.com/1202x502",
+    role: "Software Architect",
     description:
-      "Jane has an extensive background in business strategy and entrepreneurship, helping mentees unlock their potential in launching and scaling startups.",
+      "Jane is a seasoned software architect specializing in scalable web applications. She has led development teams in top tech firms and is passionate about mentoring.",
+    image: "https://a-us.storyblok.com/f/1017006/912x1120/47b81c46eb/lee.jpg/m/456x560/filters:quality(80)",
   },
 ];
 
-const Mentors = () => {
+const MentorSection = () => {
   return (
     <section className="text-gray-600 body-font py-24 bg-gray-50">
       <div className="container px-5 mx-auto">
         {/* Title Section */}
-        <h1 className="text-center text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#0d2489] via-[#c3e7ff] to-[#000000] mb-12 font-[Brick Sans]">
+        <h1 "text-center text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#0d2489] via-[#c3e7ff] to-[#000000] mb-12 font-[Brick Sans]">
           MEET OUR MENTORS
         </h1>
 
@@ -43,19 +45,19 @@ const Mentors = () => {
               />
               <h2 className="text-2xl font-semibold text-gray-900 font-[Poppins]">
                 {mentor.name}
-              </h2>
-              <p className="mt-2 text-gray-600 font-[Montserrat]">
+              </h3>
+              <p className="text-xl text-black font-['Poppins'] font-medium mt-2">
+                {mentor.role}
+              </p>
+              <p className="text-lg text-black font-['Poppins'] mt-4 leading-relaxed">
                 {mentor.description}
               </p>
-              <button className="mt-4 px-5 py-2 text-white bg-indigo-600 rounded-lg shadow-md hover:bg-indigo-700 transition">
-                Learn More
-              </button>
             </motion.div>
-          ))}
-        </div>
+          </motion.div>
+        ))}
       </div>
-    </section>
+    </div>
   );
 };
 
-export default Mentors;
+export default MentorSection;
