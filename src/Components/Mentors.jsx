@@ -4,58 +4,75 @@ import { motion } from "framer-motion";
 const mentors = [
   {
     name: "John Doe",
-    image: "https://dummyimage.com/1201x501",
+    role: "AI Researcher",
     description:
-      "John is a seasoned expert with over 20 years of experience in the tech industry, specializing in software development and leadership.",
+      "John is an experienced AI researcher with over 10 years in the field. He has worked on deep learning projects and has mentored hundreds of students in AI and ML.",
+    image: "https://a-us.storyblok.com/f/1017006/912x1120/8e93856f41/dedy.jpg/m/456x560/filters:quality(80)",
   },
   {
     name: "Jane Smith",
-    image: "https://dummyimage.com/1202x502",
+    role: "Software Architect",
     description:
-      "Jane has an extensive background in business strategy and entrepreneurship, helping mentees unlock their potential in launching and scaling startups.",
+      "Jane is a seasoned software architect specializing in scalable web applications. She has led development teams in top tech firms and is passionate about mentoring.",
+    image: "https://a-us.storyblok.com/f/1017006/912x1120/47b81c46eb/lee.jpg/m/456x560/filters:quality(80)",
   },
 ];
 
-const Mentors = () => {
+const MentorSection = () => {
   return (
-    <section className="text-gray-600 body-font py-24 bg-gray-50">
-      <div className="container px-5 mx-auto">
-        {/* Title Section */}
-        <h1 >
-          MEET OUR MENTORS
-        </h1>
+    <div className="py-16 px-8 bg-white">
+      {/* Title with animation */}
+      <motion.h2
+        className="text-5xl font-extrabold text-center mb-16 text-[#0d2489] font-['Brick_Sans']"
+        initial={{ opacity: 0, y: -50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: false }} // Re-triggers animation every time it's in view
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
+        OUR MENTORS
+      </motion.h2>
 
-        {/* Mentors Cards */}
-        <div className="flex flex-wrap justify-center gap-8">
-          {mentors.map((mentor, index) => (
+      {/* Mentor Cards */}
+      <div className="max-w-6xl mx-auto space-y-24">
+        {mentors.map((mentor, index) => (
+          <motion.div
+            key={index}
+            className={`flex flex-col md:flex-row items-center ${
+              index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+            } gap-12`}
+            initial={{ opacity: 0, x: index % 2 === 0 ? -100 : 100 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: false, amount: 0.3 }} // Repeats animation when in view
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            {/* Image with Hover Effect Only (No Parallax) */}
+            <motion.img
+              src={mentor.image}
+              alt={mentor.name}
+              className="w-[350px] h-[350px] object-cover rounded-2xl shadow-lg"
+              whileHover={{ scale: 1.05 }} // Hover effect
+            />
+
+            {/* Text Section */}
             <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.3 }}
-              whileHover={{ scale: 1.05, boxShadow: "0px 10px 30px rgba(0,0,0,0.2)" }}
-              className="bg-white rounded-2xl overflow-hidden shadow-md max-w-sm p-6 text-center"
+              className="max-w-lg p-6 bg-[#c3e7ff] rounded-xl shadow-md transition-all hover:shadow-lg"
+              whileHover={{ scale: 1.02 }} // Hover effect on text box
             >
-              <img
-                src={mentor.image}
-                alt={mentor.name}
-                className="rounded-lg mb-4 w-full h-60 object-cover"
-              />
-              <h2 className="text-2xl font-semibold text-gray-900 font-[Poppins]">
+              <h3 className="text-3xl font-bold text-[#0d2489] font-['Brick_Sans']">
                 {mentor.name}
-              </h2>
-              <p className="mt-2 text-gray-600 font-[Montserrat]">
+              </h3>
+              <p className="text-xl text-black font-['Poppins'] font-medium mt-2">
+                {mentor.role}
+              </p>
+              <p className="text-lg text-black font-['Poppins'] mt-4 leading-relaxed">
                 {mentor.description}
               </p>
-              <button className="mt-4 px-5 py-2 text-white bg-indigo-600 rounded-lg shadow-md hover:bg-indigo-700 transition">
-                Learn More
-              </button>
             </motion.div>
-          ))}
-        </div>
+          </motion.div>
+        ))}
       </div>
-    </section>
+    </div>
   );
 };
 
-export default Mentors;
+export default MentorSection;
