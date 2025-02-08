@@ -5,11 +5,15 @@ import HeroSection from "../Components/Hero";
 import ClientLogo from "../Components/ClientLogo.jsx";
 import Testimonial from "../Components/Testimonial.jsx";
 import OurServices from "../Components/OurServices.jsx";
+import Video from "../Components/Video.jsx";
 
 const BackgroundWithSlideshowAndText = () => {
   return (
     <>
       {/* Wrapper for the Hero Section */}
+      <div className="relative z-10 bg-white">
+        <Video />
+      </div>
       <div className="relative z-10 bg-white">
         <HeroSection />
       </div>
