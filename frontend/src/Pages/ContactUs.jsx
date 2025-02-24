@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import SliderComponent from "../Components/SliderComponent";
 
 const questions = [
-  { question: "What’s your name and brand?", placeholder: "Enter your business name" },
-  { question: "What’s your marketing headache?", placeholder: "Tell us your problem" },
-  { question: "Do you have a budget in mind?", placeholder: "Enter your estimated budget" },
-  { question: "What’s your dream outcome?", placeholder: "Enter your idea of success parameters" },
-  { question: "Drop your website link! (Optional)", placeholder: "Enter your website link" },
-  { question: "Share your email, we'll reach out soon!", placeholder: "Enter email" },
+  { question: "What’s your name and brand?", placeholder: "Enter your business name", key: "businessName" },
+  { question: "What’s your marketing headache?", placeholder: "Tell us your problem", key: "marketingIssue" },
+  { question: "Do you have a budget in mind?", placeholder: "Enter your estimated budget", key: "budget" },
+  { question: "What’s your dream outcome?", placeholder: "Enter your idea of success parameters", key: "dreamOutcome" },
+  { question: "Drop your website link! (Optional)", placeholder: "Enter your website link", key: "websiteLink" },
+  { question: "Share your email, we'll reach out soon!", placeholder: "Enter email", key: "email" },
 ];
 
 const backgroundGradients = [
@@ -22,26 +22,37 @@ const backgroundGradients = [
 const ContactUs = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [rotate, setRotate] = useState(45);
-  const [showPopup, setShowPopup] = useState(false);
-  const [countdown, setCountdown] = useState(5);
-  const rotateAdd = 360 / questions.length;
+  const [formData, setFormData] = useState({
+    businessName: "",
+    marketingIssue: "",
+    budget: "",
+    dreamOutcome: "",
+    websiteLink: "",
+    email: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [questions[activeIndex].key]: e.target.value });
+  };
 
   const nextSlide = () => {
     setActiveIndex((prev) => (prev + 1) % questions.length);
-    setRotate((prev) => prev + rotateAdd);
+    setRotate((prev) => prev + 360 / questions.length);
   };
 
   const handleSubmit = () => {
-    setShowPopup(true);
-    let count = 5;
-    const interval = setInterval(() => {
-      count -= 1;
-      setCountdown(count);
-      if (count === 0) {
-        clearInterval(interval);
-        window.location.reload();
-      }
-    }, 1000);
+    const formBaseURL = "https://docs.google.com/forms/d/e/1FAIpQLSfeekXQTE1fAZnmGjrQPOaXdbCXr3Dnu3G7_VYzD44OToII6A/formResponse";
+
+    const params = new URLSearchParams({
+      "entry.2005620554": formData.businessName,
+      "entry.1045781291": formData.marketingIssue,
+      "entry.1065046570": formData.budget,
+      "entry.1166974658": formData.dreamOutcome,
+      "entry.839337160": formData.websiteLink,
+      "entry.766977493": formData.email,
+    });
+
+    window.location.href = `${formBaseURL}?${params.toString()}`;
   };
 
   return (
@@ -64,6 +75,8 @@ const ContactUs = () => {
             <input
               type="text"
               placeholder={questions[activeIndex].placeholder}
+              value={formData[questions[activeIndex].key]}
+              onChange={handleChange}
               className="w-full p-3 mb-6 text-black rounded-full"
             />
             {activeIndex === questions.length - 1 ? (
@@ -91,21 +104,6 @@ const ContactUs = () => {
           <SliderComponent activeIndex={activeIndex} setActiveIndex={setActiveIndex} rotate={rotate} />
         </div>
       </div>
-
-      {/* Popup Message */}
-      {showPopup && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/50">
-          <div className="bg-white p-8 rounded-lg shadow-lg text-center">
-            <h2 className="text-2xl font-bold text-black mb-4">
-              🎉 Thank you for reaching out! <br />
-              We’ll be in touch very soon!
-            </h2>
-            <p className="text-gray-700 text-lg">
-              Redirecting to homepage in <span className="text-red-500 font-bold">{countdown}</span>...
-            </p>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
